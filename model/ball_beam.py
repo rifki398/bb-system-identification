@@ -33,5 +33,6 @@ class BallBeamNN(nn.Module):
             nn.Linear(64, 4)  # output: xdot (4)
         )
 
-    def forward(self, x):
-        return self.net(x)
+    def forward(self, input):
+        output = self.net(input)
+        return output

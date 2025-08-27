@@ -1,81 +1,55 @@
 import numpy as np
 import os
-import torch
-import torch.nn as nn
-import torch.optim as optim
 import matplotlib.pyplot as plt
-from model.ball_beam import BallAndBeam, BallBeamNN
+import torch
+from lib import *
+from model import *
+from controller import *
 
 os.system("cls||clear")
 
-## Create Ball and Beam Model
+## Create Ball and Beam Model (real and identified)
 real_model = BallAndBeam()
 id_model = BallBeamNN()
 
 ## Dataset Generation
-np.random.seed(0)
-N = 10000
-X = []
-Y = []
+X,Y = generate_dataset(real_model,N=10000)
 
-for _ in range(N):
-    x = np.random.uniform(low=[-0.5, -1, -0.2, -2], high=[0.5, 1, 0.2, 2])  # [x, x_dot, theta, theta_dot]
-    u = np.random.uniform(-1.0, 1.0)
-    xdot = real_model.f(x,u)
-    # xdot = ball_beam_dynamic(x, u)
+## Training
+loss_history, id_model = train(X,Y,id_model)
 
-    X.append(np.concatenate((x, [u])))
-    Y.append(xdot)
+## Test On Unseen Input
+x_test = np.array([0.1, 0.2, 0.05, -0.1])
+u_test = 0.3
 
-X = np.array(X)
-Y = np.array(Y)
+x_nn = torch.tensor(np.concatenate((x_test, [u_test])), dtype=torch.float32)
+x, x_nn = test(x_test,u_test,x_nn,real_model,id_model,Ts=0.1)
 
-# === 3. CONVERT TO TENSOR ===
-X_tensor = torch.tensor(X, dtype=torch.float32)
-Y_tensor = torch.tensor(Y, dtype=torch.float32)
 
-# === 4. DEFINE NEURAL NETWORK ===
-optimizer = optim.Adam(id_model.parameters(), lr=1e-3)
-loss_fn = nn.MSELoss()
 
-# === 5. TRAINING ===
-epochs = 100
-batch_size = 256
-loss_history = []
+x_init = np.array([0.01, 0., 0., 0.])
+u_init = 0
+xref = np.array([0.2, 0., 0., 0.])
 
-for epoch in range(epochs):
-    perm = torch.randperm(X_tensor.size(0))
-    for i in range(0, X_tensor.size(0), batch_size):
-        idx = perm[i:i+batch_size]
-        x_batch = X_tensor[idx]
-        y_batch = Y_tensor[idx]
+PID_Controller = PID()
 
-        y_pred = id_model(x_batch) # same as model.forward(x_batch)
-        loss = loss_fn(y_pred, y_batch)
+x_sim,u_sim,x_nn_sim,t_sim = simulate(x_init,
+                                u_init, 
+                                xref,
+                                real_model,
+                                id_model,
+                                PID_Controller,
+                                N=50)
+plot_sim(x_sim,u_sim,x_nn_sim,t_sim)
 
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-    
-    loss_history.append(loss.item())
-    if epoch % 10 == 0:
-        print(f"Epoch {epoch}, Loss: {loss.item():.6f}")
+print("\nTrue xdot  :", x)
+print("NN Predicted:", x_nn[:-1])
 
-# === 6. PLOT LOSS ===
+## Plot Loss
+plt.figure()
 plt.plot(loss_history)
 plt.xlabel("Epoch")
 plt.ylabel("MSE Loss")
 plt.grid(True)
 plt.title("Training Loss")
 plt.show()
-
-# === 7. TEST ON UNSEEN INPUT ===
-x_test = np.array([0.1, 0.2, 0.05, -0.1])
-u_test = 0.3
-x_input = torch.tensor(np.concatenate((x_test, [u_test])), dtype=torch.float32)
-
-xdot_true = real_model.f(x_test, u_test)
-xdot_pred = id_model(x_input).detach().numpy()
-
-print("\nTrue xdot  :", xdot_true)
-print("NN Predicted:", xdot_pred)
