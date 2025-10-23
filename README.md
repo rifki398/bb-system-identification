@@ -5,15 +5,6 @@ This repository contains a simulation of the classic **Ball and Beam system**, a
   <img src="picture/system.png" alt="ball_beam" style="width:70%; height:auto;"/>
 </p>
 
-## Features
-- Simulated using nonlinear dynamics based on physical equations.
-- Implemented in Python using:
-  - `numpy` for numerical operations,
-  - `matplotlib` for visualization.
-- Includes two state-feedback control strategies:
-  - Pole Placement
-  - Linear Quadratic Regulator (LQR)
-
 ## Objective
 The goal of the simulation is to training the model of **Ball and Beam System** using Neural Network. The trained model was controlled so that it stays at a specific distance from the center of the beam (setpoint tracking). The performance of real model and trained model was compared.
 
@@ -39,7 +30,6 @@ You can easily modify:
 - The desired ball position (setpoint)
 - Initial conditions
 - Controller parameters (desired pole) 
-
 
 ## Reference
 For the model explaination, see [Virseda (2024)](https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://core.ac.uk/download/pdf/289940555.pdf&ved=2ahUKEwjlvZ3bjsmOAxXBd2wGHWyvD4sQFnoECBcQAQ&usg=AOvVaw2mHZUEjnCKbGnwOsch1QZt).
