@@ -22,9 +22,19 @@ Neural network achitectures:
 
 ## How To Run
 Running the `main.py` script will automatically execute the full simulation and plot the results for comparison.
-<p align="center">
-  <img src="picture/response.png" alt="results" style="width:85%; height:auto;"/>
-</p>
+<table>
+  <tr>
+    <td align="center">
+      <img src="picture/response.png" alt="Result 1" height="270"/>
+      <br/>Ball position and beam angle
+    </td>
+    <td align="center">
+      <img src="picture/control_signal.png" alt="Result 2" height="270"/>
+      <br/>Control signal
+    </td>
+  </tr>
+</table>
+
 
 You can easily modify:
 - The desired ball position (setpoint)
